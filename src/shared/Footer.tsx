@@ -17,10 +17,10 @@ const Footer = ({image, disclaimer, roadmapLink, faqLink}: IProps) => {
       </div>
       <div className='flex-column' style={{width: '15%'}}>
         <div className='frow' style={{justifyContent: 'flex-end',  paddingBottom: '12px'}}>
-          <a>
+          <a href="/">
             <img  src={discordIcon} alt="Discord" style={{width: '20px', marginRight: '25px'}}/>
           </a>
-          <a>
+          <a href="/">
             <img src={twitterIcon} alt="Twitter" style={{width: '20px'}}/>
           </a>          
         </div>
