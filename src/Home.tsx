@@ -3,12 +3,12 @@ import styled from "styled-components";
 import Countdown from "react-countdown";
 import { Button, CircularProgress, Snackbar } from "@material-ui/core";
 import Alert from "@material-ui/lab/Alert";
-
+import placeHolderImage from './media/image-placeholder.jpeg'
 import * as anchor from "@project-serum/anchor";
 
 import { LAMPORTS_PER_SOL } from "@solana/web3.js";
 
-import { useAnchorWallet } from "@solana/wallet-adapter-react";
+import { AnchorWallet, useAnchorWallet } from "@solana/wallet-adapter-react";
 import { WalletDialogButton } from "@solana/wallet-adapter-material-ui";
 
 import {
@@ -25,7 +25,7 @@ const CounterText = styled.span``; // add your styles here
 
 const MintContainer = styled.div``; // add your styles here
 
-const MintButton = styled(Button)``; // add your styles here
+const MintButton = styled(Button)`background: #6163ff; color: white`; // add your styles here
 
 export interface HomeProps {
   candyMachineId: anchor.web3.PublicKey;
@@ -42,46 +42,20 @@ const Home = (props: HomeProps) => {
   const [isSoldOut, setIsSoldOut] = useState(false); // true when items remaining is zero
   const [isMinting, setIsMinting] = useState(false); // true when user got to press MINT
 
-  const [itemsAvailable, setItemsAvailable] = useState(0);
-  const [itemsRedeemed, setItemsRedeemed] = useState(0);
-  const [itemsRemaining, setItemsRemaining] = useState(0);
-
   const [alertState, setAlertState] = useState<AlertState>({
     open: false,
     message: "",
     severity: undefined,
   });
 
+  interface IAnchorWallet extends AnchorWallet {
+    connected?: boolean;
+  }
+
   const [startDate, setStartDate] = useState(new Date(props.startDate));
 
-  const wallet = useAnchorWallet();
+  const wallet: IAnchorWallet | undefined = useAnchorWallet();
   const [candyMachine, setCandyMachine] = useState<CandyMachine>();
-
-  const refreshCandyMachineState = () => {
-    (async () => {
-      if (!wallet) return;
-
-      const {
-        candyMachine,
-        goLiveDate,
-        itemsAvailable,
-        itemsRemaining,
-        itemsRedeemed,
-      } = await getCandyMachineState(
-        wallet as anchor.Wallet,
-        props.candyMachineId,
-        props.connection
-      );
-
-      setItemsAvailable(itemsAvailable);
-      setItemsRemaining(itemsRemaining);
-      setItemsRedeemed(itemsRedeemed);
-
-      setIsSoldOut(itemsRemaining === 0);
-      setStartDate(goLiveDate);
-      setCandyMachine(candyMachine);
-    })();
-  };
 
   const onMint = async () => {
     try {
@@ -146,7 +120,6 @@ const Home = (props: HomeProps) => {
         setBalance(balance / LAMPORTS_PER_SOL);
       }
       setIsMinting(false);
-      refreshCandyMachineState();
     }
   };
 
@@ -159,54 +132,77 @@ const Home = (props: HomeProps) => {
     })();
   }, [wallet, props.connection]);
 
-  useEffect(refreshCandyMachineState, [
-    wallet,
-    props.candyMachineId,
-    props.connection,
-  ]);
+  useEffect(() => {
+    (async () => {
+      if (!wallet) return;
+
+      const { candyMachine, goLiveDate, itemsRemaining } =
+        await getCandyMachineState(
+          wallet as anchor.Wallet,
+          props.candyMachineId,
+          props.connection
+        );
+
+      setIsSoldOut(itemsRemaining === 0);
+      setStartDate(goLiveDate);
+      setCandyMachine(candyMachine);
+    })();
+  }, [wallet, props.candyMachineId, props.connection]);
+
+  const containerStyles = {
+    display: 'flex',
+    flexDirection: 'column' as any,
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+
+  }
 
   return (
-    <main>
-      {wallet && (
-        <p>Wallet {shortenAddress(wallet.publicKey.toBase58() || "")}</p>
-      )}
+    <main style={containerStyles}>
+      {/* {wallet.connected && 
+      <>
+        <p>Address: {shortenAddress(wallet.publicKey?.toBase58() || "")}</p>
+        <p>Balance: {(balance || 0).toLocaleString()} SOL</p>
+      </>  
+      } */}
+      
+      <div style={{display: 'flex', flexDirection: 'row', marginBottom: '5px'}}>
+        <h1 style={{color: 'white', fontSize: '42px', marginBottom: '5px', marginTop: '5px'}}>Place</h1>
+        <h1 style={{color: '#5658dd', fontSize: '42px', marginBottom: '5px',  marginTop: '5px'}}>Holder</h1>
+      </div>
 
-      {wallet && <p>Balance: {(balance || 0).toLocaleString()} SOL</p>}
+      <h3 style={{color: '#9ca9b3', marginBottom: '20px'}}>This is placeholder text that can be replaced.</h3>
 
-      {wallet && <p>Total Available: {itemsAvailable}</p>}
-
-      {wallet && <p>Redeemed: {itemsRedeemed}</p>}
-
-      {wallet && <p>Remaining: {itemsRemaining}</p>}
+      {!wallet && <ConnectButton>Connect Wallet</ConnectButton>}
 
       <MintContainer>
-        {!wallet ? (
-          <ConnectButton>Connect Wallet</ConnectButton>
-        ) : (
-          <MintButton
-            disabled={isSoldOut || isMinting || !isActive}
-            onClick={onMint}
-            variant="contained"
-          >
-            {isSoldOut ? (
-              "SOLD OUT"
+        {wallet && 
+        <MintButton
+        disabled={isSoldOut || isMinting || !isActive}
+        onClick={onMint}
+        variant="contained"
+        >
+          {isSoldOut ? (
+            "SOLD OUT"
             ) : isActive ? (
               isMinting ? (
                 <CircularProgress />
-              ) : (
-                "MINT"
-              )
-            ) : (
-              <Countdown
-                date={startDate}
-                onMount={({ completed }) => completed && setIsActive(true)}
-                onComplete={() => setIsActive(true)}
-                renderer={renderCounter}
-              />
-            )}
-          </MintButton>
-        )}
+                ) : (
+                  "MINT"
+                  )
+                  ) : (
+                    <Countdown
+                    date={startDate}
+                    onMount={({ completed }) => completed && setIsActive(true)}
+                    onComplete={() => setIsActive(true)}
+                    renderer={renderCounter}
+                    />
+                    )}
+        </MintButton>
+        }
       </MintContainer>
+
+      <img src={placeHolderImage} style={{width: '550px', marginTop: '20px'}}/>
 
       <Snackbar
         open={alertState.open}
@@ -233,7 +229,7 @@ interface AlertState {
 const renderCounter = ({ days, hours, minutes, seconds, completed }: any) => {
   return (
     <CounterText>
-      {hours + (days || 0) * 24} hours, {minutes} minutes, {seconds} seconds
+      {hours} hours, {minutes} minutes, {seconds} seconds
     </CounterText>
   );
 };
