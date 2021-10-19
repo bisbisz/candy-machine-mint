@@ -12,16 +12,16 @@ const Footer = ({image, disclaimer, roadmapLink, faqLink}: IProps) => {
   return (
     <div className='frow' style={{width: '60%', justifyContent: 'space-between', padding: '64px 0px'}}>
       <div className='flex-column'>
-        <img src ={image} style={{width: '30px', paddingBottom: '12px'}}/>
+        <img src="./media/crazy-ape.png" alt="Crazy Ape NFT" style={{width: '30px', paddingBottom: '12px'}}/>
         {disclaimer}
       </div>
       <div className='flex-column' style={{width: '15%'}}>
         <div className='frow' style={{justifyContent: 'flex-end',  paddingBottom: '12px'}}>
           <a>
-            <img  src={discordIcon} style={{width: '20px', marginRight: '25px'}}/>
+            <img  src="./media/discord-icon.svg" alt="Discord" style={{width: '20px', marginRight: '25px'}}/>
           </a>
           <a>
-            <img src={twitterIcon} style={{width: '20px'}}/>
+            <img src="./media/twitter-icon.svg" alt="Twitter" style={{width: '20px'}}/>
           </a>          
         </div>
         <div className='frow' style={{justifyContent: 'flex-end'}}>
