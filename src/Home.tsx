@@ -202,7 +202,7 @@ const Home = (props: HomeProps) => {
         }
       </MintContainer>
 
-      <img src={placeHolderImage} style={{width: '550px', marginTop: '20px'}}/>
+      <img src={placeHolderImage} alt="Mint" style={{width: '550px', marginTop: '20px'}}/>
 
       <Snackbar
         open={alertState.open}
