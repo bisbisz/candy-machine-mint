@@ -21,6 +21,7 @@ import {
 } from "@solana/wallet-adapter-react";
 
 import { WalletDialogProvider } from "@solana/wallet-adapter-material-ui";
+import TextAndImage from "./shared/TextAndImage";
 import Footer from "./shared/Footer";
 import { createTheme, ThemeProvider } from "@material-ui/core";
 
@@ -122,6 +123,27 @@ const App = () => {
           </ConnectionProvider>
         </div>
         <FreeText />
+        <TextAndImage
+          text='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+          Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+          Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
+          Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
+          image={placeHolderImage}  
+        />
+        <TextAndImage reversed
+          text='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+          Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+          Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
+          Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
+          image={placeHolderImage}
+        />
+        <TextAndImage 
+          text='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+          Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+          Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
+          Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
+          image={placeHolderImage}
+        />
         
         <div className='flex-column' 
           style={{
