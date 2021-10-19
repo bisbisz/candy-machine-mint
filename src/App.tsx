@@ -21,7 +21,6 @@ import {
 } from "@solana/wallet-adapter-react";
 
 import { WalletDialogProvider } from "@solana/wallet-adapter-material-ui";
-import TextAndImage from "./shared/TextAndImage";
 import Footer from "./shared/Footer";
 import { createTheme, ThemeProvider } from "@material-ui/core";
 
