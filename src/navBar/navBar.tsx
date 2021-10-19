@@ -23,7 +23,7 @@ const navBar = () => {
       <div style={{...frowBetween, width: '70%'}}>
         <div>
           <a href='Crazy Ape NFT'>
-            <img src={placeHolderImage} style={{width: '30px'}}/>
+            <img src={placeHolderImage} alt="Mint" style={{width: '30px'}}/>
           </a>  
         </div>
         <div style={{...frowBetween, width: '25%'}}>
