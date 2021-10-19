@@ -18,7 +18,7 @@ const TextAndImage = ({reversed, image, text}: {reversed?: boolean, image: strin
       <p>{text}</p> 
     </div>
     <div>
-      <img style={{width: '400px'}} src={./media/crazy-ape.png} alt="Crazy Ape NFT"/>
+      <img style={{width: '400px'}} src="./media/crazy-ape.png" alt="Crazy Ape NFT"/>
     </div>
   </div>
   )
