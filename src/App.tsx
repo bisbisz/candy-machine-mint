@@ -173,8 +173,8 @@ const App = () => {
         <Footer 
           image={placeHolderImage}
           disclaimer='this is a generic disclaimer statement'
-          roadmapLink='https://www.solpenguins.com/'
-          faqLink='https://www.solpenguins.com/'
+          roadmapLink='https://nft.crazyapecoin.com/'
+          faqLink='https://nft.crazyapecoin.com/'
         />
       </div>
     </div>
